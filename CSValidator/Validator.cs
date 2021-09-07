@@ -8,6 +8,7 @@ namespace CSValidator
     public class Validator
     {
         private readonly List<Employee> _employees;
+        private bool _isvalid = true;
         public Validator(String dataFile)
         {
             try
@@ -20,65 +21,33 @@ namespace CSValidator
                            Manager = string.IsNullOrWhiteSpace(dataRow[1]) ? null : dataRow[1],
                            Salary = dataRow.Length == 2 ? int.Parse(dataRow[1]) : int.Parse(dataRow[2]),
                        }).ToList();
+
+                if (_employees.Count(e => e.Manager == null) > 1)
+                {
+                    _isvalid = false;
+                }
+
+                _employees.ForEach(e =>
+                {
+                    if ((!_employees.Any(emp => emp.Id == e.Manager) && e.Manager != null) || _employees.Count(emp => emp.Id == e.Id) > 1)
+                    {
+                        _isvalid = false;
+                    }
+                });
             }
             catch (Exception e)
             {
-                throw new ArgumentException(message: "Invalid File!");
-            }
-
-            if (_employees.Count(e => e.Manager == null) > 1)
-            {
-                throw new ArgumentException(message: "Invalid File!");
-            }
-
-            _employees.ForEach(e =>
-            {
-                if (!_employees.Any(emp => emp.Id == e.Manager) && e.Manager != null)
-                {
-                    throw new ArgumentException(message: "Invalid File!");
-                }
-            });
-
-            foreach (Employee employee in _employees)
-            {
-                HashSet<Employee> visited = new();
-                if (FindCycle(employee, visited))
-                {
-                    throw new ArgumentException(message: "Invalid File!");
-                }
+                _isvalid = false;
             }
         }
 
-        private bool FindCycle(Employee employee, HashSet<Employee> stackVisited)
+        public string Budget(string manager)
         {
-            Employee current = employee;
-            if (stackVisited.Contains(current))
+            if (!_isvalid)
             {
-                return true;
+                return "Invalid CSV file!";
             }
 
-            List<Employee> employees = _employees.Where(e => e.Manager == current.Id).ToList();
-            if (employees != null)
-            {
-                foreach (Employee employeee in employees)
-                {
-                    HashSet<Employee> visited = new(stackVisited);
-                    visited.Add(current);
-                    if (FindCycle(employeee, visited))
-                    {
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                stackVisited.Add(current);
-            }
-            return false;
-        }
-
-        public int Budget(string manager)
-        {
             Employee employeeManager = _employees.Find(e => e.Id == manager);
             int managerBudget = employeeManager.Salary;
             List<Employee> employees = _employees.Where(e => e.Manager == employeeManager.Id).ToList();
@@ -86,10 +55,10 @@ namespace CSValidator
             {
                 foreach (Employee employee in employees)
                 {
-                    managerBudget += Budget(employee.Id);
+                    managerBudget += int.Parse(Budget(employee.Id));
                 }
             }
-            return managerBudget;
+            return managerBudget.ToString();
         }
     }
 }

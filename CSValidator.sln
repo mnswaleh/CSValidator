@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSValidator", "CSValidator\CSValidator.csproj", "{D1BB23BB-95A9-413B-92E6-BF4D13D52E4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidatorTest", "ValidatorTest\ValidatorTest.csproj", "{E3B0AD00-A759-466B-9D93-236E6DB01786}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D1BB23BB-95A9-413B-92E6-BF4D13D52E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1BB23BB-95A9-413B-92E6-BF4D13D52E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1BB23BB-95A9-413B-92E6-BF4D13D52E4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3B0AD00-A759-466B-9D93-236E6DB01786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3B0AD00-A759-466B-9D93-236E6DB01786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3B0AD00-A759-466B-9D93-236E6DB01786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3B0AD00-A759-466B-9D93-236E6DB01786}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
